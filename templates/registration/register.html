@@ -1,0 +1,26 @@
+{% extends 'bases.html' %}
+
+{% block content %}
+    {% load crispy_forms_tags %}
+    <div class="container mt-3" >
+
+        <h2 class="text-center m-4">Registro Terapeutas</h2>
+        <form method="POST" action="">
+            {% csrf_token %}
+
+            <div class="card mx-auto" style="width: 30rem" >
+                <div class="card-body">
+                    <h6 class="card-title m-3" > Complete los siguientes datos </h6>
+
+                    {{ form|crispy }}
+
+                    <a href="{% url 'home' %}" class="card-link">Inicio</a>
+                    <a href="{% url 'login' %}" class="card-link">Iniciar sesion</a>
+
+                    <button class="btn btn-sm btn-primary float-end" type="submit" >Registrarse</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,56 @@
+
+{% if user.is_authenticated %}
+    {% if group_name == 'administradores' %}
+    <header class="p-3 text-bg-dark">
+    {% elif group_name == 'terapeutas' %}
+    <header class="p-3 text-bg-success">
+    {% elif group_name == 'pacientes' %}
+    <header class="p-3 text-bg-primary">
+    {% endif %}
+{% else %}
+    <header class="p-3 text-bg-dark">
+{% endif %}
+
+
+<div class="container">
+    <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+        <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+            <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"></use></svg>
+        </a>
+        
+        {% if user.is_authenticated %}
+            {% if group_name == 'administradores' %}
+                <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0 bg-dark">
+            {% elif group_name == 'terapeutas' %}
+                <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0 bg-success">
+            {% elif group_name == 'pacientes' %}
+                <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0 bg-primary">
+            {% endif %}
+        {% else %}
+            <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0 bg-dark">
+        {% endif %}
+        
+                <li><a href="{% url 'home' %}" class="nav-link px-2 text-white">Home</a></li>
+                <li><a href="{% url 'terapeutas' %}" class="nav-link px-2 text-white">Terapeutas</a></li>
+                <li><a href="{% url 'terapias' %}" class="nav-link px-2 text-white">Terapias</a></li>
+
+                {% if not user.is_authenticated or group_name == 'pacientes' %}
+                    <li><a href="{% url 'about' %}" class="nav-link px-2 text-white">Quienes somos</a></li>
+                    <li><a href="{% url 'aranceles' %}" class="nav-link px-2 text-white">Aranceles</a></li>
+                    <li><a href="{% url 'contacto' %}" class="nav-link px-2 text-white">Contacto</a></li>
+                {% endif %}
+            </ul>
+
+
+        
+        <div class="text-end">
+            {% if user.is_authenticated %}
+            <li style="list-style-type: none;"><a href="#" class="nav-link px-2 text-white">{{user.username | title}} | {{group_name | title}} </a></li>
+            {% else %}
+            <a type="button" class="btn btn-outline-light me-2" href="{% url 'login' %}">Login</a>
+            <a type="button" class="btn btn-warning" href="{% url 'registro' %}">Register</a>
+        </div>
+            {% endif %}
+      </div>
+    </div>
+  </header>
